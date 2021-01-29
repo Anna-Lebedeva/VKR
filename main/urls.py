@@ -1,10 +1,11 @@
 from django.conf.urls import url
-from django.urls import path
-from .views import index, about, user_login
+from django.contrib.auth import views as auth_views
+
+from . import views
 
 urlpatterns = [
-    path('', index, name='index'),
-    url(r'^login/$', user_login, name='login'),
-    path('about/', about, name='about'),
-    path('account/', about, name='account'),
+    url(r'^', views.Index.as_view(), name='index'),
+    url(r'^login/$', views.CustomLoginView.as_view(), name='login'),
+    url(r'^logout/$', auth_views.auth_logout, {'template_name': 'logout.html'}, name='logout'),
+    url(r'^about/', views.About.as_view(), name='about'),
 ]
